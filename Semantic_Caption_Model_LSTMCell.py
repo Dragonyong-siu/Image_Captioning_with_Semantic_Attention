@@ -33,6 +33,7 @@ class Semantic_Caption_Model_LSTMCell(nn.Module):
   def forward(self, caption_ids, feature_map, attributes):
     feature_map = feature_map.view(-1, 8 * 8 * 512)
     first_inputs = self.Linear_FC(feature_map) 
+    first_inputs = self.ReLU(first_inputs)
     input_wte = self.GPT2_wte(caption_ids)[:, :-1]
     input_Embedding = torch.cat([first_inputs.unsqueeze(1), input_wte], dim = 1)
     model_inputs_init = self.Input_Attention_Model_init(first_inputs)
@@ -77,12 +78,14 @@ class Semantic_Caption_Model_LSTMCell(nn.Module):
     Matmul3 = torch.matmul(attributes_weight_b,  self.Sigmoid(attributes.transpose(1, 2)))
     model_outputs = hidden_states + self.Linear_Outdiag(Matmul3)
     model_outputs = self.Linear_Outdomain(model_outputs)
+    model_outputs = self.ReLU(model_outputs)
     model_outputs = self.Linear_LM(model_outputs)
     return model_outputs
   
   def Semantic_Caption_Sampling(self, feature_map, attributes, max_len):
     feature_map = feature_map.view(-1, 8 * 8 * 512)
     Sampling_inputs = self.Linear_FC(feature_map)
+    Sampling_inputs = self.ReLU(Sampling_inputs)
     Sampling_inputs = self.Input_Attention_Model_init(Sampling_inputs) 
     Sampling_inputs = Sampling_inputs.unsqueeze(1)
     
