@@ -19,8 +19,6 @@ class Semantic_Caption_Model_GPT2(nn.Module):
     self.Dropout = nn.Dropout(0.001, inplace = True)
     
     self.Linear_FC = nn.Linear(8 * 8 * 512, self.GPT2_Hidden)
-    self.Linear_HH = nn.Linear(8 * 8 * 512, self.GPT2_Hidden)
-    self.Linear_CC = nn.Linear(8 * 8 * 512, self.GPT2_Hidden)
     self.Linear_LM = nn.Linear(self.GPT2_Hidden, self.Vocab_size)
     
     self.Linear_IAU = nn.Linear(self.GPT2_Hidden, self.GPT2_Hidden)
