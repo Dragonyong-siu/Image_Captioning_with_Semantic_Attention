@@ -18,7 +18,8 @@
    NIC_GPT2 (Before train, Use original_data) : Trash Stopwords
 
 5) Semantic_Caption_Decoder
-  Using LSTMCell as Model
+ 5.1) Using LSTMCell as Model
+ 5.2) Using GPT2 as Model
 
 6) Semantic_Caption_Loss : CrossEntropyLoss
 
